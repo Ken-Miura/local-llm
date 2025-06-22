@@ -5,7 +5,7 @@ services:
       - local-llm:/root/.ollama
     ports:
       - "11434:11434"
-    # GPUの利用を前提とする。GPUを利用しない場合はコメントアウトする。
+    # Comment out this deploy section if you don't use any GPUs.
     deploy:
       resources:
         reservations:
@@ -23,7 +23,7 @@ services:
       - 'ENABLE_OLLAMA_API=true'
       - 'OLLAMA_BASE_URL=http://local-llm:11434'
       - 'ENABLE_WEB_SEARCH=true'
-      - 'WEB_SEARCH_ENGINE=duckduckgo' # 無料で使えるのでWeb検索エンジンはduckduckgoにする
+      - 'WEB_SEARCH_ENGINE=duckduckgo'
 
 volumes:
   local-llm:
