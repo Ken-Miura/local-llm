@@ -1,0 +1,30 @@
+services:
+  local-llm:
+    image: ollama/ollama:0.9.2
+    volumes:
+      - local-llm:/root/.ollama
+    ports:
+      - "11434:11434"
+    # GPUの利用を前提とする。GPUを利用しない場合はコメントアウトする。
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+  local-llm-webui:
+    image: ghcr.io/open-webui/open-webui:git-0563738-ollama
+    volumes:
+      - local-llm-webui:/app/backend/data
+    ports:
+      - "8080:8080"
+    environment:
+      - 'WEBUI_AUTH=false'
+      - 'ENABLE_OLLAMA_API=true'
+      - 'OLLAMA_BASE_URL=http://local-llm:11434'
+      - 'ENABLE_WEB_SEARCH=true'
+      - 'WEB_SEARCH_ENGINE=duckduckgo' # 無料で使えるのでWeb検索エンジンはduckduckgoにする
+
+volumes:
+  local-llm:
+  local-llm-webui:
