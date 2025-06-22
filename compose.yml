@@ -1,6 +1,7 @@
 services:
   local-llm:
     image: ollama/ollama:0.9.2
+    container_name: local-llm-container
     volumes:
       - local-llm:/root/.ollama
     ports:
@@ -13,6 +14,7 @@ services:
             - capabilities: [gpu]
 
   local-llm-webui:
+    container_name: local-llm-webui-container
     image: ghcr.io/open-webui/open-webui:git-0563738-ollama
     volumes:
       - local-llm-webui:/app/backend/data
@@ -21,7 +23,7 @@ services:
     environment:
       - 'WEBUI_AUTH=false'
       - 'ENABLE_OLLAMA_API=true'
-      - 'OLLAMA_BASE_URL=http://local-llm:11434'
+      - 'OLLAMA_BASE_URL=http://local-llm-container:11434'
       - 'ENABLE_WEB_SEARCH=true'
       - 'WEB_SEARCH_ENGINE=duckduckgo'
 
