@@ -9,4 +9,4 @@ This project provides a Compose file that allows you to run an LLM on your local
 ## download models
 `docker exec local-llm-container ollama pull "model you want to download"`
 
-you can check models [here](https://www.ollama.com/library).
+You can check models [here](https://www.ollama.com/library).
