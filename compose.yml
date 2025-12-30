@@ -15,7 +15,7 @@ services:
 
   local-llm-webui:
     container_name: local-llm-webui-container
-    image: ghcr.io/open-webui/open-webui:git-0563738-ollama
+    image: ghcr.io/open-webui/open-webui:git-aaea9a5-cuda
     volumes:
       - local-llm-webui:/app/backend/data
     ports:
