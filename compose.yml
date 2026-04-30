@@ -21,11 +21,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - 'WEBUI_AUTH=false'
-      - 'ENABLE_OLLAMA_API=true'
-      - 'OLLAMA_BASE_URL=http://local-llm-container:11434'
-      - 'ENABLE_WEB_SEARCH=true'
-      - 'WEB_SEARCH_ENGINE=duckduckgo'
+      - WEBUI_AUTH=false
+      - ENABLE_OLLAMA_API=true
+      - OLLAMA_BASE_URL=http://local-llm-container:11434
+      - ENABLE_WEB_SEARCH=true
+      - WEB_SEARCH_ENGINE=duckduckgo
 
 volumes:
   local-llm:
