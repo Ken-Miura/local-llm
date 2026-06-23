@@ -1,7 +1,6 @@
 services:
   local-llm:
     image: ollama/ollama:0.30.10
-    container_name: local-llm-container
     volumes:
       - local-llm:/root/.ollama
     ports:
@@ -22,7 +21,7 @@ services:
     environment:
       - WEBUI_AUTH=False
       - ENABLE_OLLAMA_API=True
-      - OLLAMA_BASE_URL=http://local-llm-container:11434
+      - OLLAMA_BASE_URL=http://local-llm:11434
       - ENABLE_WEB_SEARCH=True
       - WEB_SEARCH_ENGINE=searxng
       - SEARXNG_QUERY_URL=http://web-search-proxy:8080/search?q=<query>
