@@ -1,6 +1,6 @@
 services:
   local-llm:
-    image: ollama/ollama:0.20.3
+    image: ollama/ollama:0.30.10
     container_name: local-llm-container
     volumes:
       - local-llm:/root/.ollama
@@ -14,18 +14,29 @@ services:
             - capabilities: [gpu]
 
   local-llm-webui:
-    container_name: local-llm-webui-container
-    image: ghcr.io/open-webui/open-webui:git-c40ea7f-cuda
+    image: ghcr.io/open-webui/open-webui:0.9.4 # newer version (0.9.5 or more) failed web search
     volumes:
       - local-llm-webui:/app/backend/data
     ports:
       - "8080:8080"
     environment:
-      - WEBUI_AUTH=false
-      - ENABLE_OLLAMA_API=true
+      - WEBUI_AUTH=False
+      - ENABLE_OLLAMA_API=True
       - OLLAMA_BASE_URL=http://local-llm-container:11434
-      - ENABLE_WEB_SEARCH=true
-      - WEB_SEARCH_ENGINE=duckduckgo
+      - ENABLE_WEB_SEARCH=True
+      - WEB_SEARCH_ENGINE=searxng
+      - SEARXNG_QUERY_URL=http://web-search-proxy:8080/search?q=<query>
+    # Comment out this deploy section if you don't use any GPUs.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+  web-search-proxy:
+    build: ./serxng
+    ports:
+      - "8081:8080"
 
 volumes:
   local-llm:
